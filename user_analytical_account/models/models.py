@@ -57,6 +57,16 @@ class StockMoveInh(models.Model):
     analytical_account_id = fields.Many2one('account.analytic.account', string="Branch")
 
 
+class AccountPaymentRegisterInh(models.TransientModel):
+    _inherit = 'account.payment.register'
+
+    def _create_payments(self):
+        rec = super()._create_payments()
+        move = self.env[self.env.context.get('active_model')].browse(self.env.context.get('active_id'))
+        rec.analytical_account_id = move.analytical_account_id.id
+        return rec
+
+
 class AccountPaymentInh(models.Model):
     _inherit = 'account.payment'
 

@@ -1,7 +1,22 @@
 # -*- coding: utf-8 -*-
 
-from odoo import models, fields, api
+from odoo import models, fields, api, tools
 from odoo.exceptions import UserError
+
+
+class ProductTemplate(models.Model):
+    _inherit = 'product.template'
+
+    @tools.ormcache()
+    def _get_default_category_id(self):
+        # Deletion forbidden (at least through unlink)
+        # return self.env.ref('product.product_category_all')
+        return False
+
+    categ_id = fields.Many2one(
+        'product.category', 'Product Category',
+        change_default=True, default=_get_default_category_id, group_expand='_read_group_categ_id',
+        required=True, help="Select category for the current product")
 
 
 class ResUserInh(models.Model):
@@ -14,6 +29,26 @@ class StockMoveLineInh(models.Model):
     _inherit = 'stock.move.line'
 
     analytical_account_id = fields.Many2one('account.analytic.account', string="Branch")
+
+
+class StockInventoryInh(models.Model):
+    _inherit = 'stock.inventory'
+
+    analytical_account_id = fields.Many2one('account.analytic.account', string="Branch")
+
+    def post_inventory(self):
+        res = super(StockInventoryInh, self).post_inventory()
+        for move in self.move_ids:
+            move.analytical_account_id = self.analytical_account_id.id
+            for move_line in move.move_line_ids:
+                move_line.analytical_account_id = self.analytical_account_id.id
+        moves = self.env['account.move'].search([('stock_move_id.id', 'in', self.move_ids.ids)])
+        print(moves)
+
+        moves.analytical_account_id = self.analytical_account_id.id
+        for line in moves.line_ids:
+            line.analytic_account_id = self.analytical_account_id.id
+        return res
 
 
 class StockMoveInh(models.Model):
@@ -113,13 +148,12 @@ class StockPickingInh(models.Model):
             rec.analytical_account_id = rec.move_id.analytical_account_id.id
         return record
 
-    # self.move_lines + scraps.move_id).stock_valuation_layer_ids.ids
-
     def button_validate(self):
         rec = super(StockPickingInh, self).button_validate()
         scraps = self.env['stock.scrap'].search([('picking_id', '=', self.id)])
         moves = (self.move_lines + scraps.move_id).stock_valuation_layer_ids
         for res in moves:
+            res.account_move_id.analytical_account_id = self.analytical_account_id.id
             for move in res.account_move_id.line_ids:
                 move.analytic_account_id = self.analytical_account_id.id
         return rec

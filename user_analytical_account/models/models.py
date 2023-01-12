@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from odoo import models, fields, api, tools
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, _logger
 
 
 class ProductTemplate(models.Model):
@@ -35,6 +35,11 @@ class StockInventoryInh(models.Model):
     _inherit = 'stock.inventory'
 
     analytical_account_id = fields.Many2one('account.analytic.account', string="Branch")
+    analytical_account_ids = fields.Many2many('account.analytic.account', compute='compute_account')
+
+    @api.depends('analytical_account_id')
+    def compute_account(self):
+        self.analytical_account_ids = self.env.user.analytical_account_ids.ids
 
     def post_inventory(self):
         res = super(StockInventoryInh, self).post_inventory()
@@ -64,6 +69,32 @@ class AccountPaymentRegisterInh(models.TransientModel):
         rec = super()._create_payments()
         move = self.env[self.env.context.get('active_model')].browse(self.env.context.get('active_id'))
         rec.analytical_account_id = move.analytical_account_id.id
+        return rec
+
+
+class StoreConsumptionInh(models.Model):
+    _inherit = 'store.consumption'
+
+    analytical_account_id = fields.Many2one('account.analytic.account', string="Branch")
+    analytical_account_ids = fields.Many2many('account.analytic.account', compute='compute_account')
+
+    @api.depends('analytical_account_id')
+    def compute_account(self):
+        self.analytical_account_ids = self.env.user.analytical_account_ids.ids
+
+    def action_posted(self):
+        rec = super().action_posted()
+        moves = self.env['account.move'].search([('ref', '=', self.ref)])
+        for move in moves:
+            move.analytical_account_id = self.analytical_account_id.id
+            for line in move.line_ids:
+                line.analytic_account_id = self.analytical_account_id.id
+
+        pickings = self.env['stock.picking'].search([('origin', '=', self.ref)])
+        for picking in pickings:
+            picking.analytical_account_id = self.analytical_account_id.id
+            for p in picking.move_ids_without_package:
+                p.analytical_account_id = self.analytical_account_id.id
         return rec
 
 
@@ -113,6 +144,17 @@ class SaleOrderInh(models.Model):
 
     analytical_account_id = fields.Many2one('account.analytic.account', string="Branch")
     analytical_account_ids = fields.Many2many('account.analytic.account', compute='compute_account')
+
+    @api.onchange('user_id')
+    def onchange_user_id(self):
+        # super().onchange_user_id()
+        self.warehouse_id = False
+
+    @api.onchange('company_id')
+    def _onchange_company_id(self):
+        if self.company_id:
+            # warehouse_id = self.env['ir.default'].get_model_defaults('sale.order').get('warehouse_id')
+            self.warehouse_id = False
 
     @api.depends('analytical_account_id')
     def compute_account(self):
@@ -168,12 +210,35 @@ class StockPickingInh(models.Model):
                 move.analytic_account_id = self.analytical_account_id.id
         return rec
 
+from odoo.addons.purchase.models.purchase import PurchaseOrder as Purchase
 
 class PurchaseOrderInh(models.Model):
     _inherit = 'purchase.order'
 
     analytical_account_id = fields.Many2one('account.analytic.account', string="Branch")
     analytical_account_ids = fields.Many2many('account.analytic.account', compute='compute_account')
+
+    # @api.model
+    # def _default_picking_type(self):
+    #     return False
+    #
+    # picking_type_id = fields.Many2one('stock.picking.type', 'Deliver To', states=Purchase.READONLY_STATES,
+    #                                   required=True, default=_default_picking_type,
+    #                                   domain="['|', ('warehouse_id', '=', False), ('warehouse_id.company_id', '=', company_id)]",
+    #                                   help="This will determine operation type of incoming shipment")
+
+
+
+
+    @api.model
+    def _get_picking_type(self, company_id):
+        # print('---------------------------hhhhhhhhhhhhhhhhhhhhhhh')
+        # picking_type = self.env['stock.picking.type'].search(
+        #     [('code', '=', 'incoming'), ('warehouse_id.company_id', '=', company_id)])
+        # if not picking_type:
+        #     picking_type = self.env['stock.picking.type'].search(
+        #         [('code', '=', 'incoming'), ('warehouse_id', '=', False)])
+        return False
 
     @api.depends('analytical_account_id')
     def compute_account(self):

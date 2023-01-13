@@ -1,0 +1,288 @@
+/* WORKFLOW BUTTON */
+.pos .actionpad .pos-workflow-popup {
+    height: 162px;
+}
+.pos .actionpad .pos-workflow-popup .pos-workflow-circle {
+    display: block;
+    font-size: 32px;
+    line-height: 54px;
+    padding-top: 6px;
+    background: rgb(86, 86, 86);
+    color: white;
+    width: 60px;
+    margin: auto;
+    border-radius: 30px;
+    margin-bottom: 10px;
+}
+.pos .actionpad .pos-workflow-popup .pos-workflow-circle .fa {
+    position: relative;
+    top: -1px;
+    left: 3px;
+}
+
+
+/* WORKFLOW POPUP */
+.pos .body.pos-workflow-body {
+    margin: 20px;
+    text-align: left;
+}
+.pos .body.pos-workflow-body #workflow-partner-ref,#workflow-date,#picking-date,#order-date {
+    width: 100%;
+}
+.pos .body.pos-workflow-body #workflow-note,#picking-address {
+    width: 440px;
+}
+
+
+/* WORKFLOW LIST SCREEN */
+.pos .wflist-screen .window,
+.pos .wflist-screen .full-content .subwindow{
+    display: block;
+}
+.pos .wflist-screen .full-content .subwindow-container{
+    display: block;
+    height: 100%;
+}
+.pos .wflist-screen .full-content .subwindow.collapsed,
+.pos .wflist-screen .full-content .subwindow-container.collapsed{
+    height: auto;
+}
+
+.pos .wflist-screen .full-content{
+    overflow: auto;
+}
+.pos .wflist-screen .screen-content{
+    max-width: none;
+}
+
+.pos .wflist-screen .wf-list{
+    font-size: 16px;
+    width: 100%;
+}
+.pos .wflist-screen .wf-list th,
+.pos .wflist-screen .wf-list td {
+    padding: 12px 8px;
+}
+.pos .wflist-screen .wf-list tr{
+    transition: all 150ms linear;
+    background: rgb(230,230,230);
+}
+.pos .wflist-screen .wf-list thead > tr,
+.pos .wflist-screen .wf-list tr:nth-child(even) {
+    background: rgb(247,247,247);
+}
+.pos .wflist-screen .wf-list tr.highlight{
+    transition: all 150ms linear;
+    background: rgb(110,200,155) !important;
+    color: white;
+}
+.pos .wflist-screen .wf-list tr.lowlight{
+    transition: all 150ms linear;
+    background: rgb(216, 238, 227);
+}
+.pos .wflist-screen .wf-list tr.lowlight:nth-child(even){
+    transition: all 150ms linear;
+    background: rgb(227, 246, 237);
+}
+.pos .wf-line {
+    vertical-align: text-top;
+}
+.pos .edit-wf-button {
+    margin-top: 6px;
+    color: black;
+}
+.pos .wflist-screen .wf-details{
+    padding: 16px;
+    border-bottom: solid 5px rgb(110,200,155);
+}
+.pos .wflist-screen .wf-picture{
+    height: 64px;
+    width: 64px;
+    border-radius: 32px;
+    overflow: hidden;
+    text-align: center;
+    float: left;
+    margin-right: 16px;
+    background: white;
+    position: relative;
+}
+.pos .wflist-screen .wf-picture > img {
+    position: absolute;
+    top: -9999px;
+    bottom: -9999px;
+    right: -9999px;
+    left: -9999px;
+    max-height: 64px;
+    margin: auto;
+}
+.pos .wflist-screen .wf-picture > .fa {
+    line-height: 64px;
+    font-size: 32px;
+}
+.pos .wflist-screen .wf-picture .image-uploader {
+    position: absolute;
+    z-index: 1000;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+.pos .wflist-screen .wf-name {
+    font-size: 32px;
+    line-height: 64px;
+    margin-bottom:16px;
+}
+.pos .wflist-screen .edit-buttons {
+    position: absolute;
+    right: 16px;
+    top: 10px;
+}
+.pos .wflist-screen .edit-buttons .button{
+    display: inline-block;
+    margin-left: 16px;
+    color: rgb(128,128,128);
+    cursor: pointer;
+    font-size: 36px;
+}
+.pos .wflist-screen .wf-details-box{
+    position: relative;
+    font-size: 16px;
+}
+.pos .wflist-screen .wf-details-left{
+    width: 50%;
+    float: left;
+}
+.pos .wflist-screen .wf-details-right{
+    width: 50%;
+    float: right;
+}
+.pos .wflist-screen .wf-detail{
+    line-height: 24px;
+}
+.pos .wflist-screen .wf-detail > .label{
+    font-weight: bold;
+    display: inline-block;
+    width: 75px;
+    text-align: right;
+    margin-right: 8px;
+}
+.pos .wflist-screen .wf-details input,
+.pos .wflist-screen .wf-details select
+{
+    padding: 4px;
+    border-radius: 3px;
+    border: solid 1px #cecbcb;
+    margin-bottom: 4px;
+    background: white;
+    font-family: "Lato","Lucida Grande", Helvetica, Verdana, Arial;
+    color: #555555;
+    width: 340px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+.pos .wflist-screen .wf-details input.wf-name {
+    font-size: 24px;
+    line-height: 24px;
+    margin: 18px 6px;
+    width: 340px;
+}
+.pos .wflist-screen .wf-detail > .empty{
+    opacity: 0.3;
+}
+
+.pos .wflist-screen .button.new-customer {
+    min-width: 30px;
+}
+
+.pos .searchbox-wf {
+    padding: 3px 13px;
+    margin-top: 12px;
+    margin-bottom : 12px;
+}
+
+.pos .searchbox-wf input {
+    width: 120px;
+    border: 1px solid #cecbcb;
+    padding: 10px 20px;
+    padding-left: 38px;
+    padding-right: 33px;
+    background-color: white;
+    border-radius: 20px;
+    font-family: "Lato","Lucida Grande", Helvetica, Verdana, Arial;
+    font-size: 13px;
+}
+.pos .searchbox-wf input:focus {
+    outline: none;
+    box-shadow: 0px 0px 0px 2px rgb(153, 153, 255) inset;
+    color: rgb(153, 153, 255);
+}
+
+.pos .search-clear-wf {
+    position: absolute;
+    top: 9px;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.search-clear-wf.left {
+    left: 11px;
+    color: #808080;
+}
+
+.search-clear-wf.right {
+    left: 145px;
+    color: #808080;
+    cursor: pointer;
+}
+
+@media screen and (max-width: 768px) {
+    .searchbox-wf.top-content-center {
+        display: flex
+    }
+    .pos .searchbox-wf input {
+        width: auto;
+        flex-grow: 1;
+        padding-left: 10px;
+        padding-right: 10px;
+    }
+    .pos .wflist-screen .wf-details-box {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .pos .wflist-screen .wf-details-left{
+        width: auto;
+        float: none;
+        flex-grow: 1;
+    }
+    .pos .wflist-screen .wf-details-right{
+        width: auto;
+        float: none;
+        flex-grow: 1;
+    }
+    .pos .wflist-screen .wf-detail{
+        display: flex;
+        flex-direction: column;
+    }
+    .pos .wflist-screen .wf-details input,
+    .pos .wflist-screen .wf-details select
+    {
+        width: 100%;
+    }
+    .pos .wflist-screen .wf-details input.wf-name {
+        width: 100%;
+    }
+    .pos .wflist-screen .wf-detail > .label{
+        width: auto;
+        text-align: left;
+    }
+    .pos .wflist-screen .wf-list td {
+        overflow: hidden;
+        white-space: nowrap;
+    }
+}
+

@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-name="ActionpadWidget" t-inherit="point_of_sale.ActionpadWidget" t-inherit-mode="extension" owl="1">
+        <xpath expr="//i[@class='fa fa-user']/.." position="attributes">
+            <attribute name="t-if">
+                env.pos.config.pos_workflow.indexOf('purchase') &lt; 0
+                &amp;&amp; env.pos.config.pos_workflow.indexOf('supplier') &lt; 0
+                &amp;&amp; !env.isMobile
+            </attribute>
+        </xpath>
+        <xpath expr="//i[@class='fa fa-user']/.." position="after">
+            <t t-elif="(env.pos.config.pos_workflow.indexOf('purchase') &gt;= 0
+                        || env.pos.config.pos_workflow.indexOf('supplier') &gt;= 0)
+                       &amp;&amp; !env.isMobile">
+                <i class="fa fa-user" role="img" aria-label="Vendor" title="Vendor" />
+            </t>
+        </xpath>
+
+        <t t-if="client" position="after">
+            <t t-elif="env.pos.config.pos_workflow.indexOf('purchase') &gt;= 0
+                       || env.pos.config.pos_workflow.indexOf('supplier') &gt;= 0">
+                Vendor
+            </t>
+        </t>
+
+        <button class="button pay" position="attributes">
+            <attribute name="t-if">env.pos.config.pos_workflow === 'pos.order'</attribute>
+        </button>
+        <button class="button pay" position="after">
+            <button t-else="" class="button pos-workflow-popup" t-on-click="trigger('click-pos-workflow')">
+                <div class="pos-workflow-circle">
+                    <i class="fa fa-chevron-right" role="img" /> 
+                </div>
+            </button>
+        </button>
+    </t>
+
+    <t t-name="OrderReceipt" t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension" owl="1">
+        <t t-if="receipt.cashier" position="after">
+            <div t-if="receipt.wkf_partner_ref" class="wkf_partner_ref">
+                <div>Your reference is <t t-esc="receipt.wkf_partner_ref" /></div>
+            </div>
+        </t>
+        <div class="pos-receipt-amount receipt-change" position="attributes">
+            <attribute name="t-if">env.pos.config.pos_workflow === 'pos.order'</attribute>
+        </div>
+        <div class="before-footer" position="after">
+            <div t-if="receipt.wkf_note" class="wkf_note">
+                <br/>
+                <t t-esc="receipt.wkf_note"/>
+            </div>
+        </div>
+        <t t-esc="receipt.name" position="before">
+            <t t-if="receipt.wkf_ref">
+                <div class="wkf_ref">
+                    Order <t t-esc="receipt.wkf_ref"/>
+                </div>
+            </t>
+        </t>
+        <t t-esc="receipt.name" position="attributes">
+            <attribute name="t-else"></attribute>
+        </t>
+    </t>
+
+    <t t-name="POSWorkflowPopup" owl="1">
+        <div role="dialog" class="modal-dialog">
+            <Draggable>
+                <div class="popup pos-workflow-popup">
+                    <header class="title drag-handle">
+                        <t t-esc="props.title" />
+                    </header>
+                    <main class="body pos-workflow-body">
+                    </main>
+                    <div class="footer">
+                        <div class="button confirm" t-on-click="confirm">
+                            <t t-esc="props.confirmText" />
+                        </div>
+                        <div class="button cancel" t-on-click="cancel">
+                            <t t-esc="props.cancelText" />
+                        </div>
+                    </div>
+                </div>
+            </Draggable>
+        </div>
+    </t>
+
+</templates>

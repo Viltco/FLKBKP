@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<odoo>
+
+    <record id="view_pos_config_product_tax_form" model="ir.ui.view">
+        <field name="name">view.pos.config.product.tax.form</field>
+        <field name="model">pos.config</field>
+        <field name="inherit_id" ref="pos_workflow_base_mac5.view_pos_config_workflow_form"/>
+        <field name="arch" type="xml">
+            <div id="use_pos_product_tax" position="attributes">
+                <attribute name="invisible">False</attribute>
+            </div>
+        </field>
+    </record>
+
+</odoo>

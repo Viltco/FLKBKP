@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+		<template inherit_id="point_of_sale.assets" name="point_of_sale assets" id="assets">
+				<xpath expr="." position="inside">
+						<script type="text/javascript" src="/hb_pos_customernote/static/src/js/models.js"></script>
+						<script type="text/javascript" src="/hb_pos_customernote/static/src/js/OrderLineCustomerNoteButton.js"></script>
+						<script type="text/javascript" src="/hb_pos_customernote/static/src/js/OrderLine.js"></script>
+						<script type="text/javascript" src="/hb_pos_customernote/static/src/js/OrderlineDetails.js"></script>
+						<link rel="stylesheet" href="/hb_pos_customernote/static/src/css/pos_receipt.css" id="pos-stylesheet"/>
+						<link rel="stylesheet" href="/hb_pos_customernote/static/src/css/pos.css" id="pos-stylesheet"/>
+				</xpath>
+		</template>
+</odoo>

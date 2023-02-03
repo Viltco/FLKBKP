@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+		<record id="pos_config_view_form" model="ir.ui.view">
+				<field name="name">pos.config.form.view</field>
+				<field name="model">pos.config</field>
+				<field name="inherit_id" ref="point_of_sale.pos_config_view_form"/>
+				<field name="arch" type="xml">
+
+						<div groups="product.group_product_variant" position="after">
+								<div class="col-12 col-lg-6 o_setting_box" id="iface_orderline_customer_notes">
+										<div class="o_setting_left_pane">
+												<field name="iface_orderline_customer_notes"/>
+										</div>
+										<div class="o_setting_right_pane">
+												<label for="iface_orderline_customer_notes"/>
+												<div class="text-muted">
+														Add notes on order lines to be printed on receipt and invoice
+												</div>
+										</div>
+								</div>
+						</div>
+				</field>
+		</record>
+</odoo>

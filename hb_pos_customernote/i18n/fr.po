@@ -1,0 +1,94 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* hb_pos_customernote
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 14.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-03-23 14:20+0000\n"
+"PO-Revision-Date: 2022-03-23 14:20+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: hb_pos_customernote
+#. openerp-web
+#: code:addons/hb_pos_customernote/static/src/js/OrderLineCustomerNoteButton.js:0
+#, python-format
+msgid "Add Customer Note"
+msgstr "Ajouter une note client"
+
+#. module: hb_pos_customernote
+#: model_terms:ir.ui.view,arch_db:hb_pos_customernote.pos_config_view_form
+msgid "Add notes on order lines to be printed on receipt and invoice"
+msgstr ""
+"Ajouter des notes sur les lignes de commande pour être imprimées sur le reçu"
+" et la facture"
+
+#. module: hb_pos_customernote
+#. openerp-web
+#: code:addons/hb_pos_customernote/static/src/xml/OrderLineCustomerNoteButton.xml:0
+#: code:addons/hb_pos_customernote/static/src/xml/OrderlineDetails.xml:0
+#: code:addons/hb_pos_customernote/static/src/xml/OrderlineDetails.xml:0
+#: code:addons/hb_pos_customernote/static/src/xml/orderline.xml:0
+#: code:addons/hb_pos_customernote/static/src/xml/orderline.xml:0
+#: model:ir.model.fields,field_description:hb_pos_customernote.field_pos_order_line__customer_note
+#, python-format
+msgid "Customer Note"
+msgstr "Note client"
+
+#. module: hb_pos_customernote
+#: model:ir.model.fields,field_description:hb_pos_customernote.field_pos_config__iface_orderline_customer_notes
+msgid "Customer Notes"
+msgstr "Notes client"
+
+#. module: hb_pos_customernote
+#: model:ir.model.fields,field_description:hb_pos_customernote.field_pos_config__display_name
+#: model:ir.model.fields,field_description:hb_pos_customernote.field_pos_order__display_name
+#: model:ir.model.fields,field_description:hb_pos_customernote.field_pos_order_line__display_name
+msgid "Display Name"
+msgstr "Nom affiché"
+
+#. module: hb_pos_customernote
+#: model:ir.model.fields,field_description:hb_pos_customernote.field_pos_config__id
+#: model:ir.model.fields,field_description:hb_pos_customernote.field_pos_order__id
+#: model:ir.model.fields,field_description:hb_pos_customernote.field_pos_order_line__id
+msgid "ID"
+msgstr ""
+
+#. module: hb_pos_customernote
+#: model:ir.model.fields,field_description:hb_pos_customernote.field_pos_config____last_update
+#: model:ir.model.fields,field_description:hb_pos_customernote.field_pos_order____last_update
+#: model:ir.model.fields,field_description:hb_pos_customernote.field_pos_order_line____last_update
+msgid "Last Modified on"
+msgstr "Dernière modification le"
+
+#. module: hb_pos_customernote
+#: model:ir.model,name:hb_pos_customernote.model_pos_config
+msgid "Point of Sale Configuration"
+msgstr "Paramétrage du point de vente"
+
+#. module: hb_pos_customernote
+#: model:ir.model,name:hb_pos_customernote.model_pos_order_line
+msgid "Point of Sale Order Lines"
+msgstr "Lignes des commandes du point de vente"
+
+#. module: hb_pos_customernote
+#: model:ir.model,name:hb_pos_customernote.model_pos_order
+msgid "Point of Sale Orders"
+msgstr "Commandes du point de vente"
+
+#. module: hb_pos_customernote
+#: code:addons/hb_pos_customernote/models/pos_order.py:0
+#, python-format
+msgid "Price discount from %s -> %s"
+msgstr ""
+
+#. module: hb_pos_customernote
+#: model:ir.model.fields,help:hb_pos_customernote.field_pos_order_line__customer_note
+msgid "This is a note destined to the customer"
+msgstr "Ceci est une note destinée au client"

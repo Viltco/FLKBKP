@@ -7,5 +7,5 @@ class InheritPT(models.Model):
 
     rmFirstName1 = fields.Char('Revmax First Name')
     rmFirstName2 = fields.Char('Revmax Second Name')
-    # show_on_hand_qty_status_button = fields.Float()
+    show_on_hand_qty_status_button = fields.Float()
 

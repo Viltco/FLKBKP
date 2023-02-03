@@ -45,8 +45,49 @@ class InheritAM(models.Model):
             if invoiceNumber in checkInvoiceNumber:
                 self.invisible_button = True
                 self.response = checkInvoiceNumber
+            self.sentInvoice2()
         except Exception as e:
             raise ValidationError(str(e))
+
+    def sentInvoice2(self):
+        try:
+            icpsudo = self.env['ir.config_parameter'].sudo()
+            revmax_port_number = icpsudo.get_param('revmax_connector.revmax_port_number')
+            # url = "http://revmax.local:{}/transactm/transactm".format(revmax_port_number)
+            url = "http://196.27.102.48:{}/transactm/transactm".format(revmax_port_number)
+            payload = {
+                "Currency": self.currency_id.name,
+                "BranchName": self.company_id.name,
+                "InvoiceNumber": self.name.replace('/', ""),
+                "CustomerName": self.partner_id.name,
+                "CustomerVatNumber": self.partner_id.vat,
+                "CustomerAddress": self.getAddress(),
+                "CustomerTelephone": self.partner_id.phone,
+                "CustomerBPN": self.partner_id.bpn,
+                "InvoiceAmount": self.amount_total,
+                "InvoiceTaxAmount": self.amount_tax,
+                "Istatus": "01",
+                "Cashier": self.user_id.name,
+                "InvoiceComment": "Invoice",
+                "ItemsXml": str(self.getItems()),
+                "CurrenciesXml": str(self.getCurrency())
+            }
+            headers = {
+                'content-type': "application/json",
+                'cache-control': "no-cache",
+            }
+            invoiceNumber = self.name.replace('/', "")
+            response = requests.request("POST", url, data=json.dumps(payload), headers=headers)
+            responseData = json.loads(response.text)['response']
+            checkInvoiceNumber = responseData.split("#")
+            if invoiceNumber in checkInvoiceNumber:
+                self.invisible_button = True
+                self.response = checkInvoiceNumber
+        except Exception as e:
+            raise ValidationError(str(e))
+
+    sentInvoice
+
 
     def getAddress(self):
         street = self.partner_id.street if self.partner_id.street else ''

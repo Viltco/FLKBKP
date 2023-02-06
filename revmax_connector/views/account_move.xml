@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <odoo>
     <data>
+
         <record model="ir.ui.view" id="account_move_form_view">
             <field name="name">account.move</field>
             <field name="model">account.move</field>
@@ -10,13 +11,6 @@
                     <field name="invisible_button" invisible="1"/>
                     <button name="sentInvoice" string="Sent To Revmax" type="object" class="oe_highlight" attrs="{'invisible':[('invisible_button','=',True)]}"/>
                 </header>
-
-                <xpath expr="//notebook" position="inside">
-                    <page string="Revmax Response">
-                        <field name="response"/>
-                    </page>
-                </xpath>
-
             </field>
         </record>
 

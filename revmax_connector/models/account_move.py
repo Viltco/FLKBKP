@@ -1,5 +1,5 @@
 from odoo import fields, models, modules, SUPERUSER_ID, tools
-from odoo.exceptions import ValidationError, UserError
+from odoo.exceptions import ValidationError
 import requests
 import json
 from lxml import etree
@@ -8,48 +8,42 @@ from lxml import etree
 class InheritAM(models.Model):
     _inherit = 'account.move'
 
-    invisible_button = fields.Boolean("Hide/Show Button", default=False, copy=False)
-    response = fields.Text()
+    invisible_button = fields.Boolean("Hide/Show Button", default=False)
 
     def sentInvoice(self):
         try:
-            conf = self.env['revmax.conf'].search([('user_id', '=', self.env.user.id)], limit=1)
-            # icpsudo = self.env['ir.config_parameter'].sudo()
-            # revmax_port_number = icpsudo.get_param('revmax_connector.revmax_port_number')
+            icpsudo = self.env['ir.config_parameter'].sudo()
+            revmax_port_number = icpsudo.get_param('revmax_connector.revmax_port_number')
             # url = "http://revmax.local:{}/transactm/transactm".format(revmax_port_number)
-            if conf:
-                url = "http://{}:{}/transactm/transactm".format(conf.ip_address, conf.port)
-                print(url)
-                payload = {
-                    "Currency": self.currency_id.name,
-                    "BranchName": self.company_id.name,
-                    "InvoiceNumber": self.name.replace('/', ""),
-                    "CustomerName": self.partner_id.name,
-                    "CustomerVatNumber": self.partner_id.vat,
-                    "CustomerAddress": self.getAddress(),
-                    "CustomerTelephone": self.partner_id.phone,
-                    "CustomerBPN": self.partner_id.bpn,
-                    "InvoiceAmount": self.amount_total,
-                    "InvoiceTaxAmount": self.amount_tax,
-                    "Istatus": "01",
-                    "Cashier": self.user_id.name,
-                    "InvoiceComment": "Invoice",
-                    "ItemsXml": str(self.getItems()),
-                    "CurrenciesXml": str(self.getCurrency())
-                }
-                headers = {
-                    'content-type': "application/json",
-                    'cache-control': "no-cache",
-                }
-                invoiceNumber = self.name.replace('/', "")
-                response = requests.request("POST", url, data=json.dumps(payload), headers=headers)
-                responseData = json.loads(response.text)['response']
-                checkInvoiceNumber = responseData.split("#")
-                if invoiceNumber in checkInvoiceNumber:
-                    self.invisible_button = True
-                    self.response = checkInvoiceNumber
-            # else:
-            #     raise UserError('No configuration found for this user.')
+            url = "http://45.32.128.52:{}/transactm/transactm".format(revmax_port_number)
+            payload = {
+                "Currency": self.currency_id.name,
+                "BranchName": self.company_id.name,
+                "InvoiceNumber": self.name.replace('/', ""),
+                "CustomerName": self.partner_id.name,
+                "CustomerVatNumber": self.partner_id.vat,
+                "CustomerAddress": self.getAddress(),
+                "CustomerTelephone": self.partner_id.phone,
+                "CustomerBPN": self.partner_id.bpn,
+                "InvoiceAmount": self.amount_total,
+                "InvoiceTaxAmount": self.amount_tax,
+                "Istatus": "01",
+                "Cashier": self.user_id.name,
+                "InvoiceComment": "Invoice",
+                "ItemsXml": str(self.getItems()),
+                "CurrenciesXml": str(self.getCurrency())
+            }
+            headers = {
+                'content-type': "application/json",
+                'cache-control': "no-cache",
+            }
+            invoiceNumber = self.name.replace('/', "")
+            response = requests.request("POST", url, data=json.dumps(payload), headers=headers)
+            responseData = json.loads(response.text)['response']
+            checkInvoiceNumber = responseData.split("#")
+            print(checkInvoiceNumber)
+            if invoiceNumber in checkInvoiceNumber:
+                self.invisible_button = True
         except Exception as e:
             raise ValidationError(str(e))
 

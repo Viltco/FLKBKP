@@ -25,13 +25,12 @@
     # always loaded
     'data': [
         'security/ir.model.access.csv',
-        # 'views/settings.xml',
+        'views/settings.xml',
         'views/account_move.xml',
         'views/res_partner.xml',
-        # 'views/zreport.xml',
-        # 'views/cardDetail.xml',
-        'views/product_template.xml',
-        'views/revmax_view.xml'
+        'views/zreport.xml',
+        'views/cardDetail.xml',
+        'views/product_template.xml'
     ],
     # only loaded in demonstration mode
     'demo': [

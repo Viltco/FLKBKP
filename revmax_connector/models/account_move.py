@@ -8,7 +8,7 @@ from lxml import etree
 class InheritAM(models.Model):
     _inherit = 'account.move'
 
-    invisible_button = fields.Boolean("Hide/Show Button", default=False)
+    invisible_button = fields.Boolean("Hide/Show Button", default=False, copy=False)
     response = fields.Text()
 
     def sentInvoice(self):
@@ -19,6 +19,7 @@ class InheritAM(models.Model):
             # url = "http://revmax.local:{}/transactm/transactm".format(revmax_port_number)
             if conf:
                 url = "http://{}:{}/transactm/transactm".format(conf.ip_address, conf.port)
+                print(url)
                 payload = {
                     "Currency": self.currency_id.name,
                     "BranchName": self.company_id.name,
@@ -47,8 +48,8 @@ class InheritAM(models.Model):
                 if invoiceNumber in checkInvoiceNumber:
                     self.invisible_button = True
                     self.response = checkInvoiceNumber
-            else:
-                raise UserError('No configuration found for this user.')
+            # else:
+            #     raise UserError('No configuration found for this user.')
         except Exception as e:
             raise ValidationError(str(e))
 
